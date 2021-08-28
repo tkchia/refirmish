@@ -1,8 +1,9 @@
 = Developer notes
 
+:fn-hall-21: footnote:hall-21[https://www.freedos.org/.  Retrieved on 15 August 2021.]
 :fn-uefi-21: footnote:uefi-21[UEFI Forum.  Unified Extensible Firmware Interface (UEFI) Specification: Version 2.9.  March 2021.  https://uefi.org/sites/default/files/resources/UEFI_Spec_2_9_2021_03_18.pdf.]
 
-  * big fluffy goal: boot and run https://www.freedos.org/[FreeDOS] on a UEFI{fn-uefi-21} PC
+  * big fluffy goal: boot and run FreeDOS{fn-hall-21} on a UEFI{fn-uefi-21} PC
 
 ---
 
@@ -32,8 +33,8 @@
 
 === Code structure (?)
 
-:fn-tis-95: footnote:tis-95[TIS Committee.  Tool Interface Standard (TIS) Executable and Linking Format (ELF) Specification: Version 1.2.  May 1995.  http://refspecs.linuxbase.org/elf/elf.pdf.]
 :fn-intel-21: footnote:intel-21[Intel Corporation.  Intel® 64 and IA-32 Architectures Software Developer's Manual: Volume 3A, pp. 2-17, 4-14—4-19.  June 2021.]
+:fn-tis-95: footnote:tis-95[TIS Committee.  Tool Interface Standard (TIS) Executable and Linking Format (ELF) Specification: Version 1.2.  May 1995.  http://refspecs.linuxbase.org/elf/elf.pdf.]
 
   * stage 1 is for stuff that happens before exiting UEFI boot services; stage 2 is for stuff after that
   ** other than the above, there are (currently) no hard and fast rules for delineating the two
@@ -49,14 +50,16 @@
 
 === Other notes
 
-:fn-intel-97: footnote:intel-97[Intel Corporation.  MultiProcessor Specification: Version 1.4.  May 1997.]
+:fn-abraham-20: footnote:abraham-20[https://github.com/eyalabraham/new-xt-bios.  Retrieved on 28 August 2021.]
 :fn-ibm-86: footnote:ibm-86[International Business Machines Corporation.  IBM: Personal Computer Hardware Reference Library: Technical Reference 6183355, pp. 5-14 et seq.  March 1986.  https://archive.org/details/bitsavers_ibmpcat618ferenceMar86_25829277/page/n245/mode/2up.]
+:fn-intel-97: footnote:intel-97[Intel Corporation.  MultiProcessor Specification: Version 1.4.  May 1997.]
 
   * UEFI stuff
   ** **note:** boot services will be unavailable once bootloader calls `BS->ExitBootServices(, )`
   *** _might_ be possible to implement a BIOS without exiting boot services, but this is non-trivial — UEFI expects to be in control of most system resources, incl. memory, page tables, and IRQs
   * how to correctly interface with PC hardware legacy-style
-  ** IBM's published BIOS source code, e.g. AT BIOS listings from 1986,{fn-ibm-86} might be useful
+  ** IBM's published BIOS source code, e.g. PC AT BIOS listings from 1986,{fn-ibm-86} might be useful
+  ** also potentially useful is Eyal Abraham's `new-xt-bios` project,{fn-abraham-20} a rewrite of the BIOS for the (older) PC XT; code is under an MIT License
   * Xv6 will panic if it cannot find MP tables per Intel's (deprecated) MultiProcessor Specification{fn-intel-97}
   ** `biefircate` produces dummy MP tables if `XV6_COMPAT` is defined
   ** other OSes probably do not need MP tables to work
